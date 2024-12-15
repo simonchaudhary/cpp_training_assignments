@@ -33,6 +33,12 @@ int main()
     Let stringValue4 = "Move operator";
     stringValue4 = move(stringValue3);
 
+    // += Operator
+    Let concatValue = "Hello ";
+    concatValue += "World";
+
+    concatValue.m_display();
+
     // == Operator
     Let compareValueA = "Hello";
     Let compareValueB = "Hello";

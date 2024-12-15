@@ -9,6 +9,7 @@ Let::Let(int value) : m_integerValue(value), m_type(DATATYPE::INTEGER)
 // Constructor for double
 Let::Let(double value) : m_doubleValue(value), m_type(DATATYPE::DOUBLE)
 {
+    cout << "This is double constructor " << m_doubleValue << " " << value << '\n';
 }
 
 // Constructor for string
@@ -143,6 +144,52 @@ Let &Let::operator=(Let &&let) noexcept
     return *this;
 }
 
+// += operator overloading
+Let &Let::operator+=(const Let &let)
+{
+
+    if (m_type == DATATYPE::INTEGER && let.m_type == DATATYPE::INTEGER)
+    {
+        m_integerValue += let.m_integerValue;
+    }
+
+    else if (m_type == DATATYPE::DOUBLE && let.m_type == DATATYPE::DOUBLE)
+    {
+        m_doubleValue += let.m_doubleValue;
+    }
+
+    else if (m_type == DATATYPE::DOUBLE && let.m_type == DATATYPE::INTEGER)
+    {
+        // Convert m_integerValue to double
+        m_doubleValue += static_cast<double>(let.m_integerValue);
+    }
+
+    else if (m_type == DATATYPE::INTEGER && let.m_type == DATATYPE::DOUBLE)
+    {
+        // Convert m_integerValue to double
+        m_doubleValue = static_cast<double>(m_integerValue) + let.m_doubleValue;
+
+        // Set previous instance m_type to double
+        m_type = DATATYPE::DOUBLE;
+    }
+
+    else if (m_type == DATATYPE::STRING && let.m_type == DATATYPE::STRING)
+    {
+
+        char *result = new char[strlen(m_stringValue) + strlen(let.m_stringValue) + 1];
+
+        strcpy(result, m_stringValue);
+
+        strcat(result, let.m_stringValue);
+
+        delete[] m_stringValue;
+
+        m_stringValue = result;
+    }
+
+    return *this;
+}
+
 // == operator overloading
 bool Let::operator==(const Let &let) const
 {
@@ -187,6 +234,7 @@ Let::~Let()
 // Display method
 void Let::m_display()
 {
+
     if (m_type == DATATYPE::INTEGER)
     {
         cout << "This is integer value: " << m_integerValue << '\n';

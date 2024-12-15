@@ -42,6 +42,9 @@ public:
     //  Move assignment operator
     Let &operator=(Let &&let) noexcept;
 
+    // += operator overloading
+    Let &operator+=(const Let &let);
+
     // == operator overloading
     bool operator==(const Let &let) const;
 
