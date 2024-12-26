@@ -1,18 +1,20 @@
 #include <iostream>
-#include "logger.cpp"
-#include "let.hpp"
+#include <variant>
+#include <string>
 
-int main()
-{
+int main() {
+    // Define a variant that can hold an int, double, or std::string
+    std::variant<int, double, std::string> var;
 
-    Let a = 45.3;
-    Let b = 56.7;
+    // Assign different types to the variant
+    var = 42;                     // Holds an int
+    std::cout << "Integer: " << std::get<int>(var) << "\n";
 
-    ConsoleLogger logger;
-    LoggingDecorator loggingLet1(a, logger);
-    LoggingDecorator loggingLet2(b, logger);
+    var = 3.14;                   // Holds a double
+    std::cout << "Double: " << std::get<double>(var) << "\n";
 
-    LoggingDecorator result = loggingLet1 + loggingLet2;
-    std::cout << result << std::endl;
+    var = "Hello, World!";        // Holds a string
+    std::cout << "String: " << std::get<std::string>(var) << "\n";
+
     return 0;
 }
