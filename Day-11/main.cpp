@@ -20,8 +20,8 @@ int main(){
 
 	  Filter filter;
 
-    int width = 1100;
-    int height = 1100;
+    int width = 11000;
+    int height = 11000;
 
     // Create canvas of 1100 x 1100px
     auto mycanvas = filter.createCanvas(width, height);
@@ -36,18 +36,18 @@ int main(){
 
     auto image = filter.convertTo2D(imageData,imageWidth, imageHeight);
 
-    int padding = 10;
+    int padding = 13;
     
-    int repeatWidth = (width +10)/ (imageWidth+10);
+    int repeatWidth = (width + padding)/ (imageWidth+padding);
 
-    int repeatHeight = (height +10)/ (imageHeight+10);
+    int repeatHeight = (height +padding)/ (imageHeight+padding);
 
     cout << "start repeating\n";
 
     for (int i = 0; i < repeatHeight;++i) {
       for (int j = 0; j < repeatWidth; ++j) {
-        int xPos = j * (imageWidth + 10);
-        int yPos = i * (imageHeight + 10);
+        int xPos = j * (imageWidth + padding);
+        int yPos = i * (imageHeight + padding);
 
         cout << xPos << " : " << yPos << '\n';
 
@@ -57,7 +57,7 @@ int main(){
 
     cout << "complete repeating\n";
 
-    filter.saveToPNG(mycanvas, width, height, "tiled_image_with_padding.png");
+    filter.saveToPNG(mycanvas, width, height, "tiled_image_with_padding2.png");
 
     cout << "Save success\n";
 
