@@ -178,91 +178,91 @@
 //
 //
 
-
-#define STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-
-#include <algorithm>
-#include <queue>
-#include "../include/common/CommonHeader.hpp"
-#include "../include/common/stb/stb_image.h"
-#include "../include/common/stb/stb_image_write.h"
-#include "../include/common/filter/Filter.cpp"
-#include "../include/types/types.hpp"
-#include "../include/struct/struct.hpp"
-
-struct Pixel {
-  int x;
-  int y;
-
-  Pixel(int x, int y) : x(x), y(y) {}
-};
-
-void bfsProcessImage(std::vector<std::vector<RGB>>& image, int startX, int startY, RGB targetColor, RGB newColor) {
-  int rows = image.size();
-  int cols = image[0].size();
-
-  std::queue<Pixel> pixelQueue;
-  pixelQueue.push(Pixel(startX, startY));
-
-  // Directions for neighboring pixels (N, S, E, W)
-  std::vector<std::pair<int, int>> directions = {
-      {-1, 0}, {1, 0}, {0, -1}, {0, 1}
-  };
-
-  while (!pixelQueue.empty()) {
-    Pixel current = pixelQueue.front();
-    pixelQueue.pop();
-
-    int x = current.x;
-    int y = current.y;
-
-    // Check bounds
-    if (x < 0 || x >= cols || y < 0 || y >= rows) continue;
-
-    // Skip if pixel color does not match target
-    if (image[y][x].r != targetColor.r ||
-      image[y][x].g != targetColor.g ||
-      image[y][x].b != targetColor.b) {
-      continue;
-    }
-
-    // Change pixel color
-    image[y][x] = newColor;
-
-    // Push neighboring pixels
-    for (const auto& dir : directions) {
-      int newX = x + dir.first;
-      int newY = y + dir.second;
-      pixelQueue.push(Pixel(newX, newY));
-    }
-  }
-}
-
-int main() {
-  Filter filter;
-
-  int imageWidth, imageHeight, imageChannels;
-  unsigned char* imageData = stbi_load("C:/Users/Leapfrog/source/repos/simonchaudhary/cpp_training_assignments/Day-12/images/maze.jpg", &imageWidth, &imageHeight, &imageChannels, 3);
-
-  if (imageData == nullptr) {
-    std::cout << "Image loading failed\n";
-    return 1;
-  }
-
-  std::cout << "Image loaded successfully\n";
-
-  auto image = filter.convertTo2D(imageData, imageWidth, imageHeight);
-
-  // Define target and new colors
-  RGB targetColor = { 200, 90, 90 }; // Pixels to be processed
-  RGB newColor = { 0, 255, 26 }; // New color to set
-
-  // Start BFS from a seed point (0, 0) or any point that satisfies your condition
-  bfsProcessImage(image, 0, 0, targetColor, newColor);
-
-  filter.saveToPNG(image, imageWidth, imageHeight, "bfs_output.png");
-
-  stbi_image_free(imageData);
-  return 0;
-}
+//
+//#define STB_IMAGE_IMPLEMENTATION
+//#define STB_IMAGE_WRITE_IMPLEMENTATION
+//
+//#include <algorithm>
+//#include <queue>
+//#include "../include/common/CommonHeader.hpp"
+//#include "../include/common/stb/stb_image.h"
+//#include "../include/common/stb/stb_image_write.h"
+//#include "../include/common/filter/Filter.cpp"
+//#include "../include/types/types.hpp"
+//#include "../include/struct/struct.hpp"
+//
+//struct Pixel {
+//  int x;
+//  int y;
+//
+//  Pixel(int x, int y) : x(x), y(y) {}
+//};
+//
+//void bfsProcessImage(std::vector<std::vector<RGB>>& image, int startX, int startY, RGB targetColor, RGB newColor) {
+//  int rows = image.size();
+//  int cols = image[0].size();
+//
+//  std::queue<Pixel> pixelQueue;
+//  pixelQueue.push(Pixel(startX, startY));
+//
+//  // Directions for neighboring pixels (N, S, E, W)
+//  std::vector<std::pair<int, int>> directions = {
+//      {-1, 0}, {1, 0}, {0, -1}, {0, 1}
+//  };
+//
+//  while (!pixelQueue.empty()) {
+//    Pixel current = pixelQueue.front();
+//    pixelQueue.pop();
+//
+//    int x = current.x;
+//    int y = current.y;
+//
+//    // Check bounds
+//    if (x < 0 || x >= cols || y < 0 || y >= rows) continue;
+//
+//    // Skip if pixel color does not match target
+//    if (image[y][x].r != targetColor.r ||
+//      image[y][x].g != targetColor.g ||
+//      image[y][x].b != targetColor.b) {
+//      continue;
+//    }
+//
+//    // Change pixel color
+//    image[y][x] = newColor;
+//
+//    // Push neighboring pixels
+//    for (const auto& dir : directions) {
+//      int newX = x + dir.first;
+//      int newY = y + dir.second;
+//      pixelQueue.push(Pixel(newX, newY));
+//    }
+//  }
+//}
+//
+//int main() {
+//  Filter filter;
+//
+//  int imageWidth, imageHeight, imageChannels;
+//  unsigned char* imageData = stbi_load("C:/Users/Leapfrog/source/repos/simonchaudhary/cpp_training_assignments/Day-12/images/maze.jpg", &imageWidth, &imageHeight, &imageChannels, 3);
+//
+//  if (imageData == nullptr) {
+//    std::cout << "Image loading failed\n";
+//    return 1;
+//  }
+//
+//  std::cout << "Image loaded successfully\n";
+//
+//  auto image = filter.convertTo2D(imageData, imageWidth, imageHeight);
+//
+//  // Define target and new colors
+//  RGB targetColor = { 200, 90, 90 }; // Pixels to be processed
+//  RGB newColor = { 0, 255, 26 }; // New color to set
+//
+//  // Start BFS from a seed point (0, 0) or any point that satisfies your condition
+//  bfsProcessImage(image, 0, 0, targetColor, newColor);
+//
+//  filter.saveToPNG(image, imageWidth, imageHeight, "bfs_output.png");
+//
+//  stbi_image_free(imageData);
+//  return 0;
+//}
